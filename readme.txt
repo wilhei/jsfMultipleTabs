@@ -1,31 +1,31 @@
-Dieses Projekt zeigt einen Bug, der bei multiplen Tabs entsteht.
+This project shows a bug that occurs with multiple tabs.
 
-Szenario 1:
-Vorgehen korrektes Verhalten:
-- Anwendung starten: Home (TestPage.xhtml) wird geöffnet.
-- Link "ShowValue" in neuem Tab öffnen (Strg + Click auf Link)
-- Im neuen Tab Link "Home" anklicken
--> Keine Exception in der Konsole
+Scenario 1:
+Procedure for correct behavior:
+- Start application: Home (TestPage.xhtml) is opened.
+- Open link "ShowValue" in new tab (Ctrl + click on link)
+- Click "Home" in the new tab link
+No exception in the console
 
-Vorgehen inkorrektes Verhalten:
-- Anwendung starten: Home (TestPage.xhtml) wird geöffnet.
-- Link "ShowValue" 15 mal in neuem Tab öffnen (Strg + Click auf Link)
-- Im zuerst geöffneten neuen Tab den Link "Home" anklicken
--> Es fliegt die Exception:
+Procedure for Incorrect behavior:
+- Start application: Home (TestPage.xhtml) is opened.
+- Open link "ShowValue" 15 times in new tab (Ctrl + click on link)
+- In the first opened tab click on the link "Home"
+The exception is thrown:
 	...
 	Caused by: java.lang.IllegalArgumentException: someValue must be set.
 	at com.pass.project.jsftest.Bean.init(Bean.java:26)
 	... 64 more
 	
-Fehlverhalten:
-Sind zu viele Tabs offen, wird beim Klick auf den Link "Home" komischerweise die PostConstruct Methode aufgerufen, anstatt einfach nach Home zu navigieren.
-Dies passiert nicht, wenn nur ein weiterer Tab geöffnet wurde.
+Bug:
+If too many tabs are open, clicking on the link "Home" strangely calls the PostConstruct method instead of simply navigating to Home.
+This does not happen if only one more tab has been opened.
 
-Schaut man sich den Network-Traffic an, wird beim Klick auf "Home" nur ein GET ".../faces/TestPage.xhtml" gesendet. (siehe /documents/NetworkTraffic_on_click_home.png)
+If you look at the network traffic, only one GET ".../faces/TestPage.xhtml" is sent when you click on "Home". (see /documents/NetworkTraffic_on_click_home.png)
 
-Das Ändern der Werte numberOfViewsInSession und numberOfLogicalViews in der web.xml kann die Anzahl der Tabs bis zum Fehlereintritt verändern:
+Changing the values numberOfViewsInSession and numberOfLogicalViews in web.xml can change the number of tabs until the error occurs:
 
-		<!-- Browser back  -->
+		<!-- Browser back -->
 		<context-param>
 			 <param-name>com.sun.faces.numberOfViewsInSession</param-name>
 			 <param-value>5</param-value>
@@ -39,14 +39,13 @@ Das Ändern der Werte numberOfViewsInSession und numberOfLogicalViews in der web
 		
 		
 		
-Szenario 2:
-- Anwendung starten: Home (TestPage.xhtml) wird geöffnet.
-- Folgende aktionen 5 mal wiederholen
-	- Link "ShowValue" anklicken
-	- Link "Home" anklicken
-- 5 mal auf BrowserBack klicken
-- Es erscheint innerhalb der 5 BrowserBack-Klicks folgenden Exception, OBWOHL man von Value auf Home navigiert.
+Scenario 2:
+- Start application: Home (TestPage.xhtml) is opened.
+- Repeat the following actions 5 times
+	- Click on the link "ShowValue"
+	- Click on the link "Home"
+- Click 5 times on BrowserBack
+- Following exception appears within the 5 BrowserBack clicks, although you navigate from Value to Home.
 	Caused by: java.lang.IllegalArgumentException: someValue must be set.
 	at com.pass.project.jsftest.Bean.init(Bean.java:26)
 	... 64 more
-	
