@@ -3,13 +3,12 @@ package com.pass.project.jsftest;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 @Named("bean")
-@ViewScoped
+@org.omnifaces.cdi.ViewScoped
 public class Bean implements Serializable {
 
     private static final long serialVersionUID = 1L;
