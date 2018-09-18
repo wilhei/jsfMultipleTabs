@@ -1,5 +1,14 @@
 This project shows a bug that occurs with multiple tabs.
 
+Run project:
+- open console in root directory (folder including the pom.xml)
+- mvn install
+- mvn tomcat7:run-war-only
+
+Note:
+The bug only occurs with @org.omnifaces.cdi.ViewScoped!
+But I need this ViewScope, as the javax.faces.view.ViewScoped gets destroyed in all tabs, if a menu point is clicked in one tab.
+
 Scenario 1:
 Procedure for correct behavior:
 - Start application: Home (TestPage.xhtml) is opened.

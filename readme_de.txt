@@ -1,5 +1,14 @@
 Dieses Projekt zeigt einen Bug, der bei multiplen Tabs entsteht.
 
+Projekt starten:
+- Konsole in der Root-Anwendung öffnen (da, wo die pom.xml liegt)
+- mvn install
+- mvn tomcat7:run-war-only
+
+Hinweis:
+Der Fehler tritt nur mit @org.omnifaces.cdi.ViewScoped auf!
+Ich brauche aber diesen Scope, da javax.faces.view.ViewScoped mit den Tabs nicht richtig funktioniert.
+
 Szenario 1:
 Vorgehen korrektes Verhalten:
 - Anwendung starten: Home (TestPage.xhtml) wird geöffnet.
